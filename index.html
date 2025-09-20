@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>秋意浓 - 自驾大兴安岭之旅</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+        line-height: 1.6;
+        background-image: url('https://images.unsplash.com/photo-1598888482706-60870c91035a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+        background-size: cover;
+        background-position: center center;
+        background-attachment: scroll;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+      }
+
+      /* 为移动端设备优化背景图显示 */
+      @media (max-width: 768px) {
+          body {
+              background-size: cover;
+              background-attachment: scroll;
+              /* 在移动端使用更适合的背景图定位 */
+              background-position: center top;
+          }
+      }
+
+      header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-align: center;
+        padding: 2rem 0;
+        animation: fadeInDown 1s ease;
+      }
+
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        opacity: 0.9;
+      }
+
+      /* 移动端顶部菜单样式 */
+      .mobile-menu-toggle {
+          display: none;
+          background: #667eea;
+          color: white;
+          border: none;
+          padding: 10px 15px;
+          font-size: 1.2rem;
+          cursor: pointer;
+          border-radius: 5px;
+          margin: 10px;
+          width: calc(100% - 20px);
+          position: relative;
+          z-index: 1001;
+      }
+
+      .mobile-menu {
+          display: none;
+          background: rgba(255, 255, 255, 0.95);
+          padding: 10px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+          border-radius: 5px;
+          position: absolute;
+          top: 100%;
+          left: 10px;
+          right: 10px;
+          z-index: 1000;
+          transform: translateY(-10px);
+          opacity: 0;
+          transition: all 0.3s ease;
+          margin: 0;
+      }
+
+      .mobile-menu.active {
+          display: block;
+          transform: translateY(0);
+          opacity: 1;
+      }
+
+      .mobile-menu-list {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+      }
+
+      .mobile-menu-list li {
+          margin-bottom: 5px;
+      }
+
+      .mobile-menu-list a {
+          display: block;
+          padding: 12px;
+          text-decoration: none;
+          color: #333;
+          background: #f8f9fa;
+          border-radius: 5px;
+          transition: all 0.3s ease;
+      }
+
+      .mobile-menu-list a:hover {
+          background: #667eea;
+          color: white;
+      }
+
+      .container {
+        display: flex;
+        max-width: 100%;
+      }
+
+      /* PC端左侧菜单样式 */
+      .sidebar {
+        width: 250px;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 1rem;
+        height: calc(100vh - 200px);
+        position: fixed;
+        overflow-y: auto;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+        margin-top: 20px;
+      }
+       .main-content {
+        flex: 1;
+        margin-left: 250px;
+        padding: 2rem;
+      }
+
+      .day-menu-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+        margin: 1rem 0 0.5rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #eee;
+      }
+
+      .sidebar-menu {
+        list-style: none;
+      }
+
+      .sidebar-menu li {
+        margin-bottom: 0.5rem;
+      }
+
+      .sidebar-menu a {
+        display: block;
+        padding: 0.8rem;
+        text-decoration: none;
+        color: #333;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+      }
+
+      .sidebar-menu a:hover {
+        background: #667eea;
+        color: white;
+      }
+
+      .sidebar-menu a.active {
+        background: #764ba2;
+        color: white;
+      }
+
+      .day-content {
+        display: none;
+        animation: fadeIn 0.5s ease;
+      }
+
+      .day-content.active {
+        display: block;
+      }
+
+      .attraction-card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        overflow: hidden;
+        margin-bottom: 2rem;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .attraction-images {
+        display: flex;
+        height: 300px;
+      }
+
+      .attraction-image {
+        flex: 1;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .attraction-info {
+        padding: 1.5rem;
+      }
+
+      .attraction-title {
+        font-size: 1.5rem;
+        color: #333;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 0.5rem;
+      }
+
+      .attraction-description {
+        color: #666;
+        line-height: 1.8;
+      }
+
+      .map-container {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .map-title {
+        font-size: 1.5rem;
+        color: #333;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
+      .static-map {
+        width: 100%;
+        height: 400px;
+        border-radius: 10px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .static-map:hover {
+        transform: scale(1.02);
+      }
+
+      /* 音乐控制按钮样式 */
+      .music-control {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #667eea;
+        color: white;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+      }
+
+      /* 音乐提示信息样式 */
+      .music-tip {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 10px 15px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        z-index: 1000;
+        animation: fadeOut 3s forwards;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      }
+
+      @keyframes fadeOut {
+          0% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { opacity: 0; }
+      }
+      /* 枫叶飘落动画 */
+      .maple-leaf {
+        position: fixed;
+        top: -50px;
+        color: #e74c3c;
+        font-size: 24px;
+        z-index: -1;
+        user-select: none;
+        pointer-events: none;
+        animation-name: falling;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+      }
+
+      @keyframes falling {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh) rotate(360deg);
+          opacity: 0.5;
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem;
+        background: rgba(45, 55, 72, 0.9);
+        color: white;
+        margin-top: 2rem;
+      }
+
+      /* 移动端样式 */
+      @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .container {
+                flex-direction: column;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .attraction-images {
+                flex-direction: column;
+                /* 移除 height: auto; 保持固定高度 */
+            }
+
+            .attraction-image {
+                height: 200px;
+                margin-bottom: 10px; /* 添加底部间距 */
+            }
+
+            /* 最后一个图片移除底部间距 */
+            .attraction-image:last-child {
+                margin-bottom: 0;
+            }
+
+            /* 移动端背景图优化 */
+            body {
+                background-size: cover;
+                background-attachment: scroll;
+            }
+      }
+
+      /* PC端样式 */
+      @media (min-width: 769px) {
+        .mobile-menu-toggle {
+          display: none;
+        }
+
+        .mobile-menu {
+          display: none;
+        }
+      }
+    </style>
+
+  </head>
+  <body>
+    <header>
+      <h1>秋意浓</h1>
+      <p class="subtitle">十一北京自驾大兴安岭之旅</p >
+    </header>
+
+    <!-- 移动端菜单 -->
+    <div style="position: relative; width: 100%;">
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰ 选择行程</button>
+        <div class="mobile-menu" id="mobileMenu">
+            <ul class="mobile-menu-list">
+                <li>第一天</li>
+                <li>第二天</li>
+                <li>第三天</li>
+                <li>第四天</li>
+                <li>第五天</li>
+                <li>第六天</li>
+                <li>第七天</li>
+                <li>第八天</li>
+            </ul>
+        </div>
+    </div>
+        <div class="container">
+      <!-- PC端左侧菜单 -->
+      <div class="sidebar">
+        <ul class="sidebar-menu">
+          <li>第一天</li>
+          <li>第二天</li>
+          <li>第三天</li>
+          <li>第四天</li>
+          <li>第五天</li>
+          <li>第六天</li>
+          <li>第七天</li>
+          <li>第八天</li>
+        </ul>
+      </div>
+
+      <div class="main-content">
+        <!-- 第一天 -->
+        <div id="day1" class="day-content active">
+          <h2>第一天：北京 → 国家一号风景大道 → 锡林浩特大草原</h2>
+
+          <div class="attraction-card">
+            <div class="attraction-images">
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://youke1.picui.cn/s1/2025/09/20/68ce9a6b04228.jpg');
+                "
+              ></div>
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=2');
+                "
+              ></div>
+            </div>
+            <div class="attraction-info">
+              <h3 class="attraction-title">国家一号风景大道</h3>
+              <p class="attraction-description">
+                国家一号风景大道是连接北京与内蒙古草原的重要景观大道，沿途可以欣赏到从农田到草原的自然过渡景观。这条大道不仅风景优美，还串联起了多个重要的旅游景点，是自驾游的理想选择。
+              </p >
+            </div>
+          </div>
+
+          <div class="attraction-card">
+            <div class="attraction-images">
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=3');
+                "
+              ></div>
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=4');
+                "
+              ></div>
+            </div>
+            <div class="attraction-info">
+              <h3 class="attraction-title">锡林浩特大草原</h3>
+              <p class="attraction-description">
+                锡林浩特大草原是内蒙古草原的重要组成部分，被誉为"天堂草原"。这里天高地阔，一望无际，牛羊成群，是体验蒙古族文化和草原风情的绝佳去处。秋季的锡林郭勒草原色彩斑斓，美不胜收。
+              </p >
+            </div>
+          </div>
+
+          <div class="map-container">
+            <div class="map-title">行程路线图</div>
+            <a
+              href="https://uri.amap.com/navigation?from=116.397428,39.909232&to=116.058738,43.938532&mode=car&policy=1&src=mypage&coordinate=gaode&callnative=0"
+              target="_blank"
+              class="map-link"
+            >
+              <img
+                class="static-map"
+                src="https://restapi.amap.com/v3/staticmap?location=116.397428,39.909232&zoom=4&size=800*400&markers=mid,,A:116.397428,39.909232&labels=起点,1,0,16,0xFFFFFF,0x008000:116.397428,39.909232&path=10,0x0000ff,,116.397428,39.909232;116.058738,43.938532&key=1a6b65d6bd5dbb3522ede7a8af04a65b"
+                alt="第一天行程路线图"
+              />
+            </a >
+          </div>
+        </div>
+
+        <!-- 第二天 -->
+        <div id="day2" class="day-content">
+          <h2>第二天：锡林浩特大草原 → 99号公路起点 → 乌尔盖湖 → 阿尔山附近</h2>
+
+          <div class="attraction-card">
+            <div class="attraction-images">
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=5');
+                "
+              ></div>
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=6');
+                "
+              ></div>
+            </div>
+            <div class="attraction-info">
+              <h3 class="attraction-title">西乌珠穆沁旗草原99号公路起点</h3>
+              <p class="attraction-description">
+                99号公路被誉为"中国最美草原公路"，全长160公里，以其彩虹色的路面中线和沿途壮美的自然风光而闻名。公路蜿蜒于锡林郭勒盟西乌珠穆沁旗的广袤草原之上，是体验草原风光和蒙古族文化的绝佳路线。
+              </p >
+            </div>
+          </div>
+
+          <div class="attraction-card">
+            <div class="attraction-images">
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=7');
+                "
+              ></div>
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=8');
+                "
+              ></div>
+            </div>
+            <div class="attraction-info">
+              <h3 class="attraction-title">乌尔盖湖景区</h3>
+              <p class="attraction-description">
+                乌尔盖湖景区位于锡林郭勒盟东乌珠穆沁旗，是一个以草原湖泊为核心的旅游风景区。湖水清澈，晴天时波光粼粼，阴雨天则展现出另一种神秘风情。这里是观鸟和摄影的好地方，也是体验草原湖泊风光的绝佳去处。
+              </p >
+            </div>
+          </div>
+
+          <div class="map-container">
+            <div class="map-title">行程路线图</div>
+            <a
+              href="https://uri.amap.com/navigation?from=116.058738,43.938532&to=119.898681,47.184768&mode=car&policy=1&src=mypage&coordinate=gaode&callnative=0"
+              target="_blank"
+              class="map-link"
+            >
+              <img
+                class="static-map"
+                src="https://restapi.amap.com/v3/staticmap?location=116.058738,43.938532&zoom=4&size=800*400&markers=mid,,A:116.058738,43.938532&labels=起点,1,0,16,0xFFFFFF,0x008000:116.058738,43.938532&path=10,0x0000ff,,116.058738,43.938532;119.898681,47.184768&key=1a6b65d6bd5dbb3522ede7a8af04a65b"
+                alt="第二天行程路线图"
+              />
+            </a >
+          </div>
+        </div>
+                <!-- 第三天 -->
+        <div id="day3" class="day-content">
+          <h2>第三天：阿尔山国家森林公园深度游</h2>
+
+          <div class="attraction-card">
+            <div class="attraction-images">
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=9');
+                "
+              ></div>
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=10');
+                "
+              ></div>
+            </div>
+            <div class="attraction-info">
+              <h3 class="attraction-title">乌苏浪子湖晨雾</h3>
+              <p class="attraction-description">
+                乌苏浪子湖是阿尔山最大的湖泊，也是鸟类的栖息地。清晨时分，湖面薄雾缭绕，宛如仙境，是摄影爱好者的理想拍摄地点。晨雾中的乌苏浪子湖宁静而神秘，让人感受到大自然的宁静与和谐。
+              </p >
+            </div>
+          </div>
+
+          <div class="attraction-card">
+            <div class="attraction-images">
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=11');
+                "
+              ></div>
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=12');
+                "
+              ></div>
+            </div>
+            <div class="attraction-info">
+              <h3 class="attraction-title">阿尔山天池</h3>
+              <p class="attraction-description">
+                阿尔山天池是火山喷发后形成的高位湖泊，湖水清澈，四周环绕着茂密的森林。天池久旱不涸，久雨不溢，水位常年保持稳定。站在天池边，可以欣赏到湖光山色的美景，感受大自然的神奇魅力。
+              </p >
+            </div>
+          </div>
+
+          <div class="attraction-card">
+            <div class="attraction-images">
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=13');
+                "
+              ></div>
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=14');
+                "
+              ></div>
+            </div>
+            <div class="attraction-info">
+              <h3 class="attraction-title">不冻河</h3>
+              <p class="attraction-description">
+                不冻河是哈拉哈河的一段，即使在严寒的冬季也不会结冰，河面上常年冒着热气，形成独特的自然景观。夏季的不冻河两岸绿意盎然，河水清澈见底，是避暑和休闲的好去处。
+              </p >
+            </div>
+          </div>
+
+          <div class="attraction-card">
+            <div class="attraction-images">
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=15');
+                "
+              ></div>
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=16');
+                "
+              ></div>
+            </div>
+            <div class="attraction-info">
+              <h3 class="attraction-title">杜鹃湖</h3>
+              <p class="attraction-description">
+                杜鹃湖是火山爆发后熔岩流堵塞河谷形成的湖泊，因湖畔春季开满杜鹃花而得名。湖水清澈，四季景色各异，是阿尔山国家森林公园内的主要景点之一。春夏时节湖面波光粼粼，秋冬季节则呈现出宁静致远的美景。
+              </p >
+            </div>
+          </div>
+
+          <div class="map-container">
+            <div class="map-title">行程路线图</div>
+            <a
+              href=" "
+              target="_blank"
+              class="map-link"
+            >
+              <img
+                class="static-map"
+                src="https://restapi.amap.com/v3/staticmap?location=119.898681,47.184768&zoom=8&size=800*400&markers=mid,,A:119.898681,47.184768&labels=阿尔山,1,0,16,0xFFFFFF,0x008000:119.898681,47.184768&key=1a6b65d6bd5dbb3522ede7a8af04a65b"
+                alt="第三天行程路线图"
+              />
+            </a >
+          </div>
+        </div>
+                <!-- 第四天 -->
+        <div id="day4" class="day-content">
+          <h2>第四天：阿尔山 → 成吉思汗拴马桩 → 呼伦湖 → 满洲里</h2>
+
+          <div class="attraction-card">
+            <div class="attraction-images">
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=17');
+                "
+              ></div>
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=18');
+                "
+              ></div>
+            </div>
+            <div class="attraction-info">
+              <h3 class="attraction-title">成吉思汗拴马桩</h3>
+              <p class="attraction-description">
+                成吉思汗拴马桩是相传成吉思汗征战时拴马的地方，具有重要的历史文化意义。这里不仅是了解蒙古族历史文化的好去处，也是欣赏草原风光的绝佳地点。站在这里，仿佛能感受到一代天骄的豪情壮志。
+              </p >
+            </div>
+          </div>
+
+          <div class="attraction-card">
+            <div class="attraction-images">
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=19');
+                "
+              ></div>
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=20');
+                "
+              ></div>
+            </div>
+            <div class="attraction-info">
+              <h3 class="attraction-title">呼伦湖景区</h3>
+              <p class="attraction-description">
+                呼伦湖是中国第五大淡水湖，也是中蒙两国的界湖。湖面宽阔，景色壮观，是呼伦贝尔草原上的一颗明珠。夏季湖水清澈，湖畔水草丰美，是观鸟和摄影的好地方；冬季则呈现出北国特有的冰雪风光。
+              </p >
+            </div>
+          </div>
+
+          <div class="attraction-card">
+            <div class="attraction-images">
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=21');
+                "
+              ></div>
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=22');
+                "
+              ></div>
+            </div>
+            <div class="attraction-info">
+              <h3 class="attraction-title">满洲里市</h3>
+              <p class="attraction-description">
+                满洲里是中国最大的陆运口岸城市，也是中俄边境的重要城市。这里充满了浓郁的异国风情，街道上的俄式建筑和双语招牌让人仿佛置身国外。满洲里的夜景尤其迷人，是体验中俄边境文化的绝佳去处。
+              </p >
+            </div>
+          </div>
+
+          <div class="map-container">
+            <div class="map-title">行程路线图</div>
+            <a
+              href=" "
+              target="_blank"
+              class="map-link"
+            >
+              <img
+                class="static-map"
+                src="https://restapi.amap.com/v3/staticmap?location=119.898681,47.184768&zoom=5&size=800*400&markers=mid,,A:119.898681,47.184768|mid,,B:117.435753,49.590792&labels=阿尔山,1,0,16,0xFFFFFF,0x008000:119.898681,47.184768|满洲里,1,0,16,0xFFFFFF,0xFF0000:117.435753,49.590792&path=10,0x0000ff,,119.898681,47.184768;117.435753,49.590792&key=1a6b65d6bd5dbb3522ede7a8af04a65b"
+                alt="第四天行程路线图"
+              />
+            </a >
+          </div>
+        </div>
+                <!-- 第五天 -->
+        <div id="day5" class="day-content">
+          <h2>第五天：满洲里 → 186彩带河 → 33湿地 → 黑山头</h2>
+
+          <div class="attraction-card">
+            <div class="attraction-images">
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=23');
+                "
+              ></div>
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=24');
+                "
+              ></div>
+            </div>
+            <div class="attraction-info">
+              <h3 class="attraction-title">186彩带河</h3>
+              <p class="attraction-description">
+                186彩带河位于陈巴尔虎旗边防公路186公里界碑处，因蜿蜒如彩带而得名。这里是网红打卡地，河道曲折，两岸分布湿地、草原与原始森林，是中俄界河额尔古纳河的一段典型景观。站在观景台上，可以同时看到中国和俄罗斯的领土。
+              </p >
+            </div>
+          </div>
+
+          <div class="attraction-card">
+            <div class="attraction-images">
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=25');
+                "
+              ></div>
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=26');
+                "
+              ></div>
+            </div>
+            <div class="attraction-info">
+              <h3 class="attraction-title">三十三湿地</h3>
+              <p class="attraction-description">
+                三十三湿地位于186彩带河和满洲里之间，因距离俄罗斯小镇33公里而得名。这片湿地较为小众，但宁静优美，适合放松身心。从高处观看，湿地景色甚至超过白洋淀，是一个免费且值得游览的景点。
+              </p >
+            </div>
+          </div>
+
+          <div class="attraction-card">
+            <div class="attraction-images">
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=27');
+                "
+              ></div>
+              <div
+                class="attraction-image"
+                style="
+                  background-image: url('https://picsum.photos/600/300?random=28');
+                "
+              ></div>
+            </div>
+            <div class="attraction-info">
+              <h3 class="attraction-title">黑山头日落</h3>
+              <p class="attraction-description">
+                黑山头被誉为"中国最美草原日落观测点"，日落时分，金色的光芒洒在广袤的草原上，把整个草原染成金黄色，景色格外迷人。这里还可以体验骑马、蒙古包住宿、篝火晚会等特色活动，是感受草原文化的好地方。
+              </p >
+            </div>
+          </div>
+
+          <div class="map-container">
+            <div class="map-title">行程路线图</div>
+            <a
+              href=" "
+              target="_blank"
+              class="map-link"
+            >
+              <img
+                class="static-map"
+                src="https://restapi.amap.com/v3/staticmap?location=117.435753,49.590792&zoom=6&size=800*400&markers=mid,,A:117.435753,49.590792|mid,,B:120.307251,50.227749&labels=满洲里,1,0,16,0xFFFFFF,0x008000:117.435753,49.590792|黑山头,1,0,16,0xFFFFFF,0xFF0000:120.307251,50.227749&path=10,0x0000ff,,117.435753,49.590792;120.307251,50.227749&key=1a6b65d6bd5dbb3522ede7a8af04a65b"
+                alt="第五天行程路线图"
+              />
+            </a >
+          </div>
+        </div>
+                <!-- 第六天 -->
+        <div id="day6" class="day-content">
+            <h2>第六天：黑山头 → 904县道 → 恩和村 → 海拉尔</h2>
+
+            <div class="attraction-card">
+                <div class="attraction-images">
+                    <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=29')"></div>
+                    <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=30')"></div>
+                </div>
+                <div class="attraction-info">
+                    <h3 class="attraction-title">904县道（卡线）</h3>
+                    <p class="attraction-description">
+                        904县道被誉为"中国最美边防公路"，沿途可以欣赏到额尔古纳河的蜿蜒美景和边境草原风光。这条路连接着多个边境村庄，被称为"卡线"，是自驾游爱好者不可错过的经典路线。沿途风景优美，是体验边境风光的绝佳选择。
+                    </p >
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-images">
+                    <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=31')"></div>
+                    <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=32')"></div>
+                </div>
+                <div class="attraction-info">
+                    <h3 class="attraction-title">恩和村</h3>
+                    <p class="attraction-description">
+                        恩和村是中国唯一的俄罗斯民族乡，被誉为"油画小镇"。这里与俄罗斯仅隔一条额尔古纳河，居住着大量的华俄后裔。村内房屋都是富有异域风情的"木刻楞式"建筑，极具俄罗斯特色。在这里可以体验独特的中俄文化融合风情。
+                    </p >
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-images">
+                    <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=33')"></div>
+                    <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=34')"></div>
+                </div>
+                <div class="attraction-info">
+                    <h3 class="attraction-title">海拉尔市区</h3>
+                    <p class="attraction-description">
+                        海拉尔是呼伦贝尔市的中心城区，也是呼伦贝尔的政治、经济、文化中心。这里有丰富的蒙元文化资源，市区内有成吉思汗广场、吊桥公园等景点。海拉尔作为重要的交通枢纽，是前往呼伦贝尔各旗市的必经之地，也是体验蒙古族风情的重要城市。
+                    </p >
+                </div>
+            </div>
+
+            <div class="map-container">
+                <div class="map-title">行程路线图</div>
+                <a href=" " target="_blank" class="map-link">
+                    < img class="static-map" src="https://restapi.amap.com/v3/staticmap?location=120.307251,50.227749&zoom=7&size=800*400&markers=mid,,A:120.307251,50.227749|mid,,B:119.762222,49.212222&labels=黑山头,1,0,16,0xFFFFFF,0x008000:120.307251,50.227749|海拉尔,1,0,16,0xFFFFFF,0xFF0000:119.762222,49.212222&path=10,0x0000ff,,120.307251,50.227749;119.762222,49.212222&key=您的高德地图key" alt="第六天行程路线图">
+                </a >
+            </div>
+        </div>
+                <!-- 第七天 -->
+        <div id="day7" class="day-content">
+                <h2>第七天：海拉尔 → 兴安盟</h2>
+
+                <div class="attraction-card">
+                    <div class="attraction-images">
+                        <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=35')"></div>
+                        <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=36')"></div>
+                    </div>
+                    <div class="attraction-info">
+                        <h3 class="attraction-title">海拉尔周边草原</h3>
+                        <p class="attraction-description">
+                            海拉尔周边的呼伦贝尔大草原是中国最美丽的草原之一，这里有一望无际的绿色草原、蜿蜒的河流和成群的牛羊。可以参观呼和诺尔草原、莫日格勒河等景点，体验蒙古族传统的游牧文化和生活方式，感受草原的辽阔与壮美。
+                        </p >
+                    </div>
+                </div>
+
+                <div class="attraction-card">
+                    <div class="attraction-images">
+                        <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=37')"></div>
+                        <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=38')"></div>
+                    </div>
+                    <div class="attraction-info">
+                        <h3 class="attraction-title">兴安盟</h3>
+                        <p class="attraction-description">
+                            兴安盟位于内蒙古自治区东北部，地处大兴安岭向松嫩平原过渡带，是东北地区与内蒙古自治区的结合部。这里自然风光优美，人文景观丰富，是体验蒙古族文化、欣赏大兴安岭森林风光的好地方。秋季的兴安盟色彩斑斓，美不胜收。
+                        </p >
+                    </div>
+                </div>
+
+                <div class="map-container">
+                    <div class="map-title">行程路线图</div>
+                    <a href=" " target="_blank" class="map-link">
+                        < img class="static-map" src="https://restapi.amap.com/v3/staticmap?location=119.762222,49.212222&zoom=5&size=800*400&markers=mid,,A:119.762222,49.212222|mid,,B:122.070313,46.082851&labels=海拉尔,1,0,16,0xFFFFFF,0x008000:119.762222,49.212222|兴安盟,1,0,16,0xFFFFFF,0xFF0000:122.070313,46.082851&path=10,0x0000ff,,119.762222,49.212222;122.070313,46.082851&key=您的高德地图key" alt="第七天行程路线图">
+                    </a >
+                </div>
+            </div>
+
+        <!-- 第八天 -->
+        <div id="day8" class="day-content">
+                <h2>第八天：兴安盟 → 北京</h2>
+
+                <div class="attraction-card">
+                    <div class="attraction-info">
+                        <h3 class="attraction-title">返程北京</h3>
+                        <p class="attraction-description">
+                            结束了为期八天的大兴安岭自驾之旅，满载着美好的回忆踏上归途。这一路从北京出发，穿越草原、森林、湖泊，体验了不同的自然风光和民族文化，收获满满。期待下一次的旅行！
+                        </p >
+                    </div>
+                </div>
+
+                <div class="map-container">
+                    <div class="map-title">行程路线图</div>
+                    <a href="https://uri.amap.com/navigation?from=122.070313,46.082851&to=116.397428,39.909232&mode=car&policy=1&src=mypage&coordinate=gaode&callnative=0" target="_blank" class="map-link">
+                        < img class="static-map" src="https://restapi.amap.com/v3/staticmap?location=122.070313,46.082851&zoom=4&size=800*400&markers=mid,,A:122.070313,46.082851|mid,,B:116.397428,39.909232&labels=兴安盟,1,0,16,0xFFFFFF,0x008000:122.070313,46.082851|北京,1,0,16,0xFFFFFF,0xFF0000:116.397428,39.909232&path=10,0x0000ff,,122.070313,46.082851;116.397428,39.909232&key=您的高德地图key" alt="第八天行程路线图">
+                    </a >
+                </div>
+            </div>
+      </div>
+    </div>
+
+    <!-- 音乐控制按钮 -->
+    <button id="musicControl" class="music-control" onclick="toggleMusic()">
+      🔇
+    </button>
+
+    <!-- 音频元素 -->
+    <audio
+      id="backgroundMusic"
+      src="./ILLBlAUER - Counter Attack（钢琴版）.mp3"
+      loop
+    >
+      <source
+        src="ILLBlAUER - Counter Attack（钢琴版）.mp3"
+        type="audio/mpeg"
+      />
+      您的浏览器不支持音频元素。
+    </audio>
+
+    <footer>
+      <p>© 2025 秋意浓自驾游 | 大兴安岭之旅</p >
+    </footer>
+     <script>
+      // 获取音频和控制按钮元素
+      const backgroundMusic = document.getElementById("backgroundMusic");
+      const musicControl = document.getElementById("musicControl");
+      let isPlaying = false;
+
+      // 创建枫叶飘落动画
+      function createMapleLeaves() {
+        const leafCount = 30; // 枫叶数量
+        const body = document.querySelector("body");
+
+        for (let i = 0; i < leafCount; i++) {
+          // 创建枫叶元素
+          const leaf = document.createElement("div");
+          leaf.innerHTML = "🍂";
+          leaf.classList.add("maple-leaf");
+
+          // 随机设置枫叶的初始位置和动画属性
+          const startPosition = Math.random() * window.innerWidth;
+          const animationDuration = 5 + Math.random() * 10; // 5-15秒的动画时长
+          const animationDelay = Math.random() * 5; // 0-5秒的延迟
+
+          leaf.style.left = `${startPosition}px`;
+          leaf.style.animationDuration = `${animationDuration}s`;
+          leaf.style.animationDelay = `${animationDelay}s`;
+
+          // 将枫叶添加到页面中
+          body.appendChild(leaf);
+        }
+      }
+
+      // 切换音乐播放/暂停
+      function toggleMusic() {
+        if (isPlaying) {
+          backgroundMusic.pause();
+          musicControl.innerHTML = "🔇";
+          isPlaying = false;
+        } else {
+          backgroundMusic
+            .play()
+            .then(() => {
+              musicControl.innerHTML = "🔊";
+              isPlaying = true;
+            })
+            .catch((error) => {
+              console.log("音乐播放失败:", error);
+            });
+        }
+      }
+
+      function showDay(day) {
+          // 隐藏所有天数的内容
+          const dayContents = document.querySelectorAll('.day-content');
+          dayContents.forEach(content => {
+              content.classList.remove('active');
+          });
+
+          // 显示选中的天数内容
+          document.getElementById(`day${day}`).classList.add('active');
+
+          // 更新菜单样式（仅PC端）
+          const menuItems = document.querySelectorAll('.sidebar-menu a');
+          menuItems.forEach(item => {
+              item.classList.remove('active');
+          });
+
+          // 为当前选中的菜单项添加活动样式（仅PC端）
+          if (event && event.target && event.target.closest('.sidebar-menu')) {
+              event.target.classList.add('active');
+          }
+      }
+
+      function mobileMenuChanged(select) {
+        if (select.value) {
+          showDay(select.value);
+
+          // 隐藏下拉菜单
+          const mobileMenu = document.getElementById("mobileMenu");
+          mobileMenu.classList.remove("active");
+        }
+      }
+
+      // 页面加载完成后创建枫叶并显示音乐提示
+      document.addEventListener('DOMContentLoaded', function() {
+          createMapleLeaves();
+
+          // 显示音乐提示信息
+          showMusicTip();
+
+          // 添加点击其他地方隐藏菜单的事件监听器
+          document.addEventListener('click', function(event) {
+              const mobileMenu = document.getElementById('mobileMenu');
+              const menuButton = document.querySelector('.mobile-menu-toggle');
+
+              // 如果点击的不是菜单按钮也不是菜单本身，则隐藏菜单
+              if (!menuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                  hideMobileMenu();
+              }
+          });
+
+          // 尝试自动播放音乐
+          backgroundMusic.play().then(() => {
+              // 自动播放成功
+              musicControl.innerHTML = '🔊';
+              isPlaying = true;
+          }).catch(error => {
+              // 自动播放失败，需要用户交互
+              console.log("自动播放失败，需要用户交互才能播放音乐:", error);
+              musicControl.innerHTML = '🔇';
+              isPlaying = false;
+          });
+
+          showDay(1);
+      });
+
+      // 显示音乐提示信息
+      function showMusicTip() {
+          const tip = document.createElement('div');
+          tip.className = 'music-tip';
+          tip.innerHTML = '点击右下角按钮播放背景音乐';
+          document.body.appendChild(tip);
+
+          // 3秒后自动移除提示
+          setTimeout(() => {
+              if (tip.parentNode) {
+                  tip.parentNode.removeChild(tip);
+              }
+          }, 3000);
+      }
+
+      // 切换移动端菜单显示/隐藏
+      function toggleMobileMenu() {
+          const mobileMenu = document.getElementById('mobileMenu');
+          mobileMenu.classList.toggle('active');
+      }
+
+      // 隐藏移动端菜单
+      function hideMobileMenu() {
+          const mobileMenu = document.getElementById('mobileMenu');
+          mobileMenu.classList.remove('active');
+      }
+    </script>
+
+  </body>
+</html>
