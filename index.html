@@ -195,13 +195,33 @@
 
       .attraction-image {
         flex: 1;
-        background-size: cover;
-        background-position: center;
         transition: transform 0.3s ease;
         cursor: pointer;
+        margin: 0 5px;
+        overflow: hidden;
+        border-radius: 8px;
+      }
+      
+      .attraction-image:first-child {
+        margin-left: 0;
+      }
+      
+      .attraction-image:last-child {
+        margin-right: 0;
+      }
+
+      .attraction-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
       }
 
       .attraction-image:hover {
+        transform: scale(1.02);
+      }
+      
+      .attraction-image:hover img {
         transform: scale(1.05);
       }
 
@@ -367,6 +387,11 @@
         transform: scale(0.8);
         transition: transform 0.3s ease;
         opacity: 0;
+        cursor: pointer;
+      }
+
+      .modal-content:hover {
+        transform: scale(0.85);
       }
 
       #modalVideo {
@@ -376,6 +401,10 @@
       .image-modal.active .modal-content {
         transform: scale(1);
         opacity: 1;
+      }
+      
+      .image-modal.active .modal-content:hover {
+        transform: scale(1.05);
       }
 
       .close-modal {
@@ -524,6 +553,43 @@
           display: none;
         }
       }
+
+      .todo-list {
+        list-style-type: none;
+        padding-left: 0;
+      }
+
+      .todo-list li {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        transition: background-color 0.3s ease;
+      }
+
+      .todo-list li:hover {
+        background-color: #f8f9fa;
+      }
+
+      .todo-list li:last-child {
+        border-bottom: none;
+      }
+
+      .todo-list input[type="checkbox"] {
+        margin-right: 15px;
+        transform: scale(1.3);
+        cursor: pointer;
+      }
+
+      .todo-list span {
+        font-size: 1.1rem;
+        color: #333;
+      }
+
+      .todo-list input[type="checkbox"]:checked + span {
+        text-decoration: line-through;
+        color: #999;
+      }
     </style>
 
   </head>
@@ -547,6 +613,8 @@
         <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰ 选择行程</button>
         <div class="mobile-menu" id="mobileMenu">
             <ul class="mobile-menu-list">
+                <li data-day="overview">行程总览</li>
+                <li data-day="todo">待办事项</li>
                 <li data-day="1">第一天</li>
                 <li data-day="2">第二天</li>
                 <li data-day="3">第三天</li>
@@ -562,6 +630,8 @@
       <!-- PC端左侧菜单 -->
       <div class="sidebar">
         <ul class="sidebar-menu">
+          <li data-day="overview">行程总览</li>
+          <li data-day="todo">待办事项</li>
           <li data-day="1">第一天</li>
           <li data-day="2">第二天</li>
           <li data-day="3">第三天</li>
@@ -574,24 +644,73 @@
       </div>
 
       <div class="main-content">
+        <!-- 行程总览 -->
+        <div id="dayoverview" class="day-content active">
+          <h2>行程总览</h2>
+          
+          <div class="attraction-card">
+            <div class="attraction-info">
+              <h3 class="attraction-title">行程概览</h3>
+              <p class="attraction-description">
+                这是一次从北京出发，深入大兴安岭的8天7晚自驾之旅。行程将带您领略内蒙古草原的辽阔、森林的幽深、湖泊的宁静以及边境城市的异域风情。
+                从北京出发，途经国家一号风景大道、锡林浩特大草原、99号公路、阿尔山国家森林公园、呼伦湖、满洲里、186彩带河、黑山头、恩和村，最终回到北京。
+                这条线路融合了草原、森林、湖泊、湿地、边境等多种自然景观，让您充分感受秋日大兴安岭的壮美。
+              </p>
+            </div>
+          </div>
+          
+          <div class="attraction-card">
+            <div class="attraction-info">
+              <h3 class="attraction-title">行程路线图</h3>
+              <a href="https://uri.amap.com/navigation?from=116.397428,39.909232&waypoints=116.058738,43.938532|119.898681,47.184768|117.435753,49.590792&to=120.307251,50.227749&mode=car&policy=1&src=mypage&coordinate=gaode&callnative=0" target="_blank">
+                <img src="行程总览.png" alt="行程总览图" style="width: 100%; border-radius: 10px;">
+              </a>
+              <p style="text-align: center; margin-top: 10px; color: #666; font-size: 0.9rem;">点击路线图可在高德地图中查看详细路线</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 待办事项 -->
+        <div id="daytodo" class="day-content">
+          <h2>待办事项</h2>
+          
+          <div class="attraction-card">
+            <div class="attraction-info">
+              <h3 class="attraction-title">行程计划</h3>
+              <ul class="todo-list">
+                <li>
+                  <input type="checkbox" id="todo1">
+                  <label for="todo1">在车上放风筝，用无人机跟拍车与风筝</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="todo2">
+                  <label for="todo2">在海拉尔做妆造，旅拍</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="todo3">
+                  <label for="todo3">骑马，跟拍黑山头镇日落</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="todo4">
+                  <label for="todo4">狂飙</label>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
         <!-- 第一天 -->
-        <div id="day1" class="day-content active">
+        <div id="day1" class="day-content">
           <h2>第一天：北京 → 国家一号风景大道 → 锡林浩特大草原</h2>
 
           <div class="attraction-card">
             <div class="attraction-images">
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/国家一号风景大道/10.2国家一号风景大道（御道口-乌兰布统）_1_行行摄摄的老锺_来自小红书网页版.jpg');
-                "
-              ></div>
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/国家一号风景大道/9.29国家一号风景大道，附草原赏秋路线。_1_行行摄摄的老锺_来自小红书网页版.jpg');
-                "
-              ></div>
+              <div class="attraction-image">
+                <img src="./img/国家一号风景大道/10.2国家一号风景大道（御道口-乌兰布统）_1_行行摄摄的老锺_来自小红书网页版.jpg" alt="国家一号风景大道">
+              </div>
+              <div class="attraction-image">
+                <img src="./img/国家一号风景大道/9.29国家一号风景大道，附草原赏秋路线。_1_行行摄摄的老锺_来自小红书网页版.jpg" alt="国家一号风景大道">
+              </div>
             </div>
             <div class="attraction-info">
               <h3 class="attraction-title">国家一号风景大道</h3>
@@ -603,18 +722,12 @@
 
           <div class="attraction-card">
             <div class="attraction-images">
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/锡林浩特大草原/1125篇——9月锡林浩特_1_让世界了解内蒙古_来自小红书网页版.jpg');
-                "
-              ></div>
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/锡林浩特大草原/一直开到云开见草原☁️_1_Momo_来自小红书网页版.jpg');
-                "
-              ></div>
+              <div class="attraction-image">
+                <img src="./img/锡林浩特大草原/1125篇——9月锡林浩特_1_让世界了解内蒙古_来自小红书网页版.jpg" alt="锡林浩特大草原">
+              </div>
+              <div class="attraction-image">
+                <img src="./img/锡林浩特大草原/一直开到云开见草原☁️_1_Momo_来自小红书网页版.jpg" alt="锡林浩特大草原">
+              </div>
             </div>
             <div class="attraction-info">
               <h3 class="attraction-title">锡林浩特大草原</h3>
@@ -637,6 +750,7 @@
                 alt="第一天行程路线图"
               />
             </a >
+            <p style="text-align: center; margin-top: 10px; color: #666; font-size: 0.9rem;">点击路线图可在高德地图中查看详细路线</p>
           </div>
         </div>
 
@@ -646,18 +760,12 @@
 
           <div class="attraction-card">
             <div class="attraction-images">
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/99号公路起点/内蒙古｜草原99号公路起点_1_不生气旅行_来自小红书网页版.jpg');
-                "
-              ></div>
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/99号公路起点/来99号公路一定要等到天黑！_1_宝生永梦_来自小红书网页版.jpg');
-                "
-              ></div>
+              <div class="attraction-image">
+                <img src="./img/99号公路起点/内蒙古｜草原99号公路起点_1_不生气旅行_来自小红书网页版.jpg" alt="西乌珠穆沁旗草原99号公路起点">
+              </div>
+              <div class="attraction-image">
+                <img src="./img/99号公路起点/来99号公路一定要等到天黑！_1_宝生永梦_来自小红书网页版.jpg" alt="西乌珠穆沁旗草原99号公路起点">
+              </div>
             </div>
             <div class="attraction-info">
               <h3 class="attraction-title">西乌珠穆沁旗草原99号公路起点</h3>
@@ -669,18 +777,12 @@
 
           <div class="attraction-card">
             <div class="attraction-images">
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/乌兰盖湖景区/_1_Amll 👄 包治百病_来自小红书网页版.jpg');
-                "
-              ></div>
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/乌兰盖湖景区/乌拉盖湖！仙境也不过如此🥹_1_ysxsshs_来自小红书网页版.jpg');
-                "
-              ></div>
+              <div class="attraction-image">
+                <img src="./img/乌兰盖湖景区/_1_Amll 👄 包治百病_来自小红书网页版.jpg" alt="乌尔盖湖景区">
+              </div>
+              <div class="attraction-image">
+                <img src="./img/乌兰盖湖景区/乌拉盖湖！仙境也不过如此🥹_1_ysxsshs_来自小红书网页版.jpg" alt="乌尔盖湖景区">
+              </div>
             </div>
             <div class="attraction-info">
               <h3 class="attraction-title">乌尔盖湖景区</h3>
@@ -703,6 +805,7 @@
                 alt="第二天行程路线图"
               />
             </a >
+            <p style="text-align: center; margin-top: 10px; color: #666; font-size: 0.9rem;">点击路线图可在高德地图中查看详细路线</p>
           </div>
         </div>
                 <!-- 第三天 -->
@@ -711,7 +814,9 @@
 
           <div class="attraction-card">
                 <div class="attraction-images">
-                    <div class="attraction-image" style="background-image: url('./img/乌苏浪子湖/乌苏浪子湖的晨雾_1_话饼_来自小红书网页版.jpg')"></div>
+                    <div class="attraction-image">
+                      <img src="./img/乌苏浪子湖/乌苏浪子湖的晨雾_1_话饼_来自小红书网页版.jpg" alt="乌苏浪子湖晨雾">
+                    </div>
                     <div class="attraction-image">
                         <video class="attraction-video" muted loop autoplay playsinline>
                             <source src="./img/乌苏浪子湖/乌苏浪子湖的晨雾_1_话饼_来自小红书网页版.mp4" type="video/mp4">
@@ -729,18 +834,12 @@
 
           <div class="attraction-card">
             <div class="attraction-images">
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/天池/被《国家地理》评为最美秋色的阿尔山太值了_1_西西的旅行_来自小红书网页版.jpg');
-                "
-              ></div>
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/天池/阿尔山驼峰岭天池_1_小红薯5F734DB5_来自小红书网页版.jpg');
-                "
-              ></div>
+              <div class="attraction-image">
+                <img src="./img/天池/被《国家地理》评为最美秋色的阿尔山太值了_1_西西的旅行_来自小红书网页版.jpg" alt="阿尔山天池">
+              </div>
+              <div class="attraction-image">
+                <img src="./img/天池/阿尔山驼峰岭天池_1_小红薯5F734DB5_来自小红书网页版.jpg" alt="阿尔山天池">
+              </div>
             </div>
             <div class="attraction-info">
               <h3 class="attraction-title">阿尔山天池</h3>
@@ -752,18 +851,12 @@
 
           <div class="attraction-card">
             <div class="attraction-images">
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/不冻河/发现不冻河这个拍照位置的人真是个天才_1_迪士尼在逃豆瓣酱_来自小红书网页版.jpg');
-                "
-              ></div>
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/不冻河/阿尔山最高光就是不冻河！！附2日免费路线_1_百万同学_来自小红书网页版.jpg');
-                "
-              ></div>
+              <div class="attraction-image">
+                <img src="./img/不冻河/发现不冻河这个拍照位置的人真是个天才_1_迪士尼在逃豆瓣酱_来自小红书网页版.jpg" alt="不冻河">
+              </div>
+              <div class="attraction-image">
+                <img src="./img/不冻河/阿尔山最高光就是不冻河！！附2日免费路线_1_百万同学_来自小红书网页版.jpg" alt="不冻河">
+              </div>
             </div>
             <div class="attraction-info">
               <h3 class="attraction-title">不冻河</h3>
@@ -775,18 +868,12 @@
 
           <div class="attraction-card">
             <div class="attraction-images">
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/杜鹃湖/阿尔山—杜鹃湖_1_喜喜_来自小红书网页版.jpg');
-                "
-              ></div>
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/大峡谷/大峡谷才是阿尔山最好的地方_1_哲学家猫猫_来自小红书网页版.jpg');
-                "
-              ></div>
+              <div class="attraction-image">
+                <img src="./img/杜鹃湖/阿尔山—杜鹃湖_1_喜喜_来自小红书网页版.jpg" alt="杜鹃湖">
+              </div>
+              <div class="attraction-image">
+                <img src="./img/大峡谷/大峡谷才是阿尔山最好的地方_1_哲学家猫猫_来自小红书网页版.jpg" alt="大峡谷">
+              </div>
             </div>
             <div class="attraction-info">
               <h3 class="attraction-title">杜鹃湖</h3>
@@ -809,6 +896,7 @@
                 alt="第三天行程路线图"
               />
             </a >
+            <p style="text-align: center; margin-top: 10px; color: #666; font-size: 0.9rem;">点击路线图可在高德地图中查看详细路线</p>
           </div>
         </div>
                 <!-- 第四天 -->
@@ -817,18 +905,12 @@
 
           <div class="attraction-card">
             <div class="attraction-images">
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/成吉思汗拴马桩/在草原的尽头🍰是一块巨大的抹茶蛋糕_1_请叫我安大侠_来自小红书网页版.jpg');
-                "
-              ></div>
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/成吉思汗拴马桩/奔向草原的牛马_1_盈车嘉穗🌾_来自小红书网页版.jpg');
-                "
-              ></div>
+              <div class="attraction-image">
+                <img src="./img/成吉思汗拴马桩/在草原的尽头🍰是一块巨大的抹茶蛋糕_1_请叫我安大侠_来自小红书网页版.jpg" alt="成吉思汗拴马桩">
+              </div>
+              <div class="attraction-image">
+                <img src="./img/成吉思汗拴马桩/奔向草原的牛马_1_盈车嘉穗🌾_来自小红书网页版.jpg" alt="成吉思汗拴马桩">
+              </div>
             </div>
             <div class="attraction-info">
               <h3 class="attraction-title">成吉思汗拴马桩</h3>
@@ -840,18 +922,12 @@
 
           <div class="attraction-card">
             <div class="attraction-images">
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/呼伦湖/呼伦湖·私人牧场📍_1_林-旅居_来自小红书网页版.jpg');
-                "
-              ></div>
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/呼伦湖/我在呼伦湖收获了绝美日落🌅_1_vinaaaaa_来自小红书网页版.jpg');
-                "
-              ></div>
+              <div class="attraction-image">
+                <img src="./img/呼伦湖/呼伦湖·私人牧场📍_1_林-旅居_来自小红书网页版.jpg" alt="呼伦湖景区">
+              </div>
+              <div class="attraction-image">
+                <img src="./img/呼伦湖/我在呼伦湖收获了绝美日落🌅_1_vinaaaaa_来自小红书网页版.jpg" alt="呼伦湖景区">
+              </div>
             </div>
             <div class="attraction-info">
               <h3 class="attraction-title">呼伦湖景区</h3>
@@ -863,18 +939,12 @@
 
           <div class="attraction-card">
             <div class="attraction-images">
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/满洲里市/朋友圈问爆了❗都以为我去国外玩了❗_1_小Q浪迹天涯_来自小红书网页版.jpg');
-                "
-              ></div>
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/满洲里市/满洲里全攻略︳这个角度的国门（附时间表）_1_宋大猫_来自小红书网页版.jpg');
-                "
-              ></div>
+              <div class="attraction-image">
+                <img src="./img/满洲里市/朋友圈问爆了❗都以为我去国外玩了❗_1_小Q浪迹天涯_来自小红书网页版.jpg" alt="满洲里市">
+              </div>
+              <div class="attraction-image">
+                <img src="./img/满洲里市/满洲里全攻略︳这个角度的国门（附时间表）_1_宋大猫_来自小红书网页版.jpg" alt="满洲里市">
+              </div>
             </div>
             <div class="attraction-info">
               <h3 class="attraction-title">满洲里市</h3>
@@ -897,6 +967,7 @@
                 alt="第四天行程路线图"
               />
             </a >
+            <p style="text-align: center; margin-top: 10px; color: #666; font-size: 0.9rem;">点击路线图可在高德地图中查看详细路线</p>
           </div>
         </div>
                 <!-- 第五天 -->
@@ -905,18 +976,12 @@
 
           <div class="attraction-card">
             <div class="attraction-images">
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/186彩带河/186彩带河.一场旷日持久的落日_1_爱旅行的蹬蹬麻麻_来自小红书网页版.jpg');
-                "
-              ></div>
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/186彩带河/186彩带河值得去吗？_1_汤圆是大宝_来自小红书网页版.jpg');
-                "
-              ></div>
+              <div class="attraction-image">
+                <img src="./img/186彩带河/186彩带河.一场旷日持久的落日_1_爱旅行的蹬蹬麻麻_来自小红书网页版.jpg" alt="186彩带河">
+              </div>
+              <div class="attraction-image">
+                <img src="./img/186彩带河/186彩带河值得去吗？_1_汤圆是大宝_来自小红书网页版.jpg" alt="186彩带河">
+              </div>
             </div>
             <div class="attraction-info">
               <h3 class="attraction-title">186彩带河</h3>
@@ -934,7 +999,9 @@
                   您的浏览器不支持视频播放。
                 </video>
               </div>
-              <div class="attraction-image" style="background-image: url('./img/33湿地/被《国家地理》称之为，最美草原公路之一🛣️_1_时线旅行-高端度假_来自小红书网页版.jpg')"></div>
+              <div class="attraction-image">
+                <img src="./img/33湿地/被《国家地理》称之为，最美草原公路之一🛣️_1_时线旅行-高端度假_来自小红书网页版.jpg" alt="三十三湿地">
+              </div>
             </div>
             <div class="attraction-info">
               <h3 class="attraction-title">三十三湿地</h3>
@@ -946,18 +1013,12 @@
 
           <div class="attraction-card">
             <div class="attraction-images">
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/黑山头镇/呼伦贝尔必玩打卡景点｜“黑山头”_1_恒宇旅行_来自小红书网页版.jpg');
-                "
-              ></div>
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('./img/黑山头镇/在黑山头 我也看到了银河🌌星空🌃_1_一川老母_来自小红书网页版.jpg');
-                "
-              ></div>
+              <div class="attraction-image">
+                <img src="./img/黑山头镇/呼伦贝尔必玩打卡景点｜"黑山头"_1_恒宇旅行_来自小红书网页版.jpg" alt="黑山头日落">
+              </div>
+              <div class="attraction-image">
+                <img src="./img/黑山头镇/在黑山头 我也看到了银河🌌星空🌃_1_一川老母_来自小红书网页版.jpg" alt="黑山头日落">
+              </div>
             </div>
             <div class="attraction-info">
               <h3 class="attraction-title">黑山头日落</h3>
@@ -980,6 +1041,7 @@
                 alt="第五天行程路线图"
               />
             </a >
+            <p style="text-align: center; margin-top: 10px; color: #666; font-size: 0.9rem;">点击路线图可在高德地图中查看详细路线</p>
           </div>
         </div>
                 <!-- 第六天 -->
@@ -988,8 +1050,12 @@
 
             <div class="attraction-card">
                 <div class="attraction-images">
-                    <div class="attraction-image" style="background-image: url('./img/卡线/大兴安岭根白线｜来到了小学课本中的秋天🍂_1_肆月君_来自小红书网页版.jpg')"></div>
-                    <div class="attraction-image" style="background-image: url('./img/卡线/达达线和热阿线有什么不一样_1_L_来自小红书网页版.jpg')"></div>
+                    <div class="attraction-image">
+                      <img src="./img/卡线/大兴安岭根白线｜来到了小学课本中的秋天🍂_1_肆月君_来自小红书网页版.jpg" alt="904县道（卡线）">
+                    </div>
+                    <div class="attraction-image">
+                      <img src="./img/卡线/达达线和热阿线有什么不一样_1_L_来自小红书网页版.jpg" alt="904县道（卡线）">
+                    </div>
                 </div>
                 <div class="attraction-info">
                     <h3 class="attraction-title">904县道（卡线）</h3>
@@ -1001,7 +1067,9 @@
 
             <div class="attraction-card">
                 <div class="attraction-images">
-                    <div class="attraction-image" style="background-image: url('./img/恩和村/内蒙古day3-恩和_1_吃饭超快_来自小红书网页版.jpg')"></div>
+                    <div class="attraction-image">
+                      <img src="./img/恩和村/内蒙古day3-恩和_1_吃饭超快_来自小红书网页版.jpg" alt="恩和村">
+                    </div>
                     <div class="attraction-image">
                         <video class="attraction-video" muted loop autoplay playsinline>
                             <source src="./img/恩和村/内蒙古day3-恩和_1_吃饭超快_来自小红书网页版.mp4" type="video/mp4">
@@ -1019,7 +1087,9 @@
 
             <div class="attraction-card">
                 <div class="attraction-images">
-                    <div class="attraction-image" style="background-image: url('./img/海拉尔/豪赌成功！！在哈克崖山追到了人生日落❗️_1_青空的时光口袋_来自小红书网页版.jpg')"></div>
+                    <div class="attraction-image">
+                      <img src="./img/海拉尔/豪赌成功！！在哈克崖山追到了人生日落❗️_1_青空的时光口袋_来自小红书网页版.jpg" alt="海拉尔市区">
+                    </div>
                     <div class="attraction-image">
                         <video class="attraction-video" muted loop autoplay playsinline>
                             <source src="./img/海拉尔/豪赌成功！！在哈克崖山追到了人生日落❗️_1_青空的时光口袋_来自小红书网页版.mp4" type="video/mp4">
@@ -1039,7 +1109,8 @@
                 <div class="map-title">行程路线图</div>
                 <a href=" " target="_blank" class="map-link">
                     <img class="static-map" src="https://restapi.amap.com/v3/staticmap?location=120.307251,50.227749&zoom=7&size=800*400&markers=mid,,A:120.307251,50.227749|mid,,B:119.762222,49.212222&labels=黑山头,1,0,16,0xFFFFFF,0x008000:120.307251,50.227749|海拉尔,1,0,16,0xFFFFFF,0xFF0000:119.762222,49.212222&path=10,0x0000ff,,120.307251,50.227749;119.762222,49.212222&key=1a6b65d6bd5dbb3522ede7a8af04a65b" alt="第六天行程路线图">
-                </a >
+                </a>
+                <p style="text-align: center; margin-top: 10px; color: #666; font-size: 0.9rem;">点击路线图可在高德地图中查看详细路线</p>
             </div>
         </div>
                 <!-- 第七天 -->
@@ -1048,8 +1119,12 @@
 
                 <div class="attraction-card">
                     <div class="attraction-images">
-                        <div class="attraction-image" style="background-image: url('./img/海拉尔/豪赌成功！！在哈克崖山追到了人生日落❗️_1_青空的时光口袋_来自小红书网页版.jpg')"></div>
-                        <div class="attraction-image" style="background-image: url('./img/兴安盟/城市牛马们！乌兰毛都草原才是你该呆的地方…_1_小肥颖儿_来自小红书网页版.jpg')"></div>
+                        <div class="attraction-image">
+                          <img src="./img/海拉尔/豪赌成功！！在哈克崖山追到了人生日落❗️_1_青空的时光口袋_来自小红书网页版.jpg" alt="海拉尔周边草原">
+                        </div>
+                        <div class="attraction-image">
+                          <img src="./img/兴安盟/城市牛马们！乌兰毛都草原才是你该呆的地方…_1_小肥颖儿_来自小红书网页版.jpg" alt="兴安盟">
+                        </div>
                     </div>
                     <div class="attraction-info">
                         <h3 class="attraction-title">海拉尔周边草原</h3>
@@ -1061,8 +1136,12 @@
 
                 <div class="attraction-card">
                     <div class="attraction-images">
-                        <div class="attraction-image" style="background-image: url('./img/兴安盟/阿尔山·呼伦贝尔4日追秋攻略｜附踩雷机位_1_热爱生活的杨小N_来自小红书网页版.jpg')"></div>
-                        <div class="attraction-image" style="background-image: url('./img/蓝房子/已经在开始期待呼伦贝尔封神级别的秋天了🍂_1_Eli_来自小红书网页版.jpg')"></div>
+                        <div class="attraction-image">
+                          <img src="./img/兴安盟/阿尔山·呼伦贝尔4日追秋攻略｜附踩雷机位_1_热爱生活的杨小N_来自小红书网页版.jpg" alt="兴安盟">
+                        </div>
+                        <div class="attraction-image">
+                          <img src="./img/蓝房子/已经在开始期待呼伦贝尔封神级别的秋天了🍂_1_Eli_来自小红书网页版.jpg" alt="兴安盟">
+                        </div>
                     </div>
                     <div class="attraction-info">
                         <h3 class="attraction-title">兴安盟</h3>
@@ -1076,7 +1155,8 @@
                     <div class="map-title">行程路线图</div>
                     <a href=" " target="_blank" class="map-link">
                         <img class="static-map" src="https://restapi.amap.com/v3/staticmap?location=119.762222,49.212222&zoom=5&size=800*400&markers=mid,,A:119.762222,49.212222|mid,,B:122.070313,46.082851&labels=海拉尔,1,0,16,0xFFFFFF,0x008000:119.762222,49.212222|兴安盟,1,0,16,0xFFFFFF,0xFF0000:122.070313,46.082851&path=10,0x0000ff,,119.762222,49.212222;122.070313,46.082851&key=1a6b65d6bd5dbb3522ede7a8af04a65b" alt="第七天行程路线图">
-                    </a >
+                    </a>
+                    <p style="text-align: center; margin-top: 10px; color: #666; font-size: 0.9rem;">点击路线图可在高德地图中查看详细路线</p>
                 </div>
             </div>
 
@@ -1097,7 +1177,8 @@
                     <div class="map-title">行程路线图</div>
                     <a href="https://uri.amap.com/navigation?from=122.070313,46.082851&to=116.397428,39.909232&mode=car&policy=1&src=mypage&coordinate=gaode&callnative=0" target="_blank" class="map-link">
                         <img class="static-map" src="https://restapi.amap.com/v3/staticmap?location=122.070313,46.082851&zoom=4&size=800*400&markers=mid,,A:122.070313,46.082851|mid,,B:116.397428,39.909232&labels=兴安盟,1,0,16,0xFFFFFF,0x008000:122.070313,46.082851|北京,1,0,16,0xFFFFFF,0xFF0000:116.397428,39.909232&path=10,0x0000ff,,122.070313,46.082851;116.397428,39.909232&key=1a6b65d6bd5dbb3522ede7a8af04a65b" alt="第八天行程路线图">
-                    </a >
+                    </a>
+                    <p style="text-align: center; margin-top: 10px; color: #666; font-size: 0.9rem;">点击路线图可在高德地图中查看详细路线</p>
                 </div>
             </div>
       </div>
@@ -1246,11 +1327,12 @@
                 }, 300);
               }
             } else {
-              // 处理背景图片
-              const bgImage = this.style.backgroundImage;
-              const imageUrl = bgImage.match(/url\(["']?(.*?)["']?\)/)[1];
-              modalImg.src = imageUrl;
-              modalImg.style.display = 'block';
+              // 处理img标签
+              const img = this.querySelector('img');
+              if (img) {
+                modalImg.src = img.src;
+                modalImg.style.display = 'block';
+              }
             }
             
             // 显示模态框
@@ -1321,6 +1403,9 @@
               // 隐藏蒙层
               overlay.style.display = 'none';
               
+              // 显示提示信息
+              showMapTip();
+              
               // 自动播放音乐
               backgroundMusic.play().then(() => {
                   musicControl.innerHTML = '🔊';
@@ -1374,7 +1459,26 @@
               });
           });
 
-          showDay(1);
+          // 为待办事项添加事件监听器
+          const todoCheckboxes = document.querySelectorAll('#daytodo input[type="checkbox"]');
+          todoCheckboxes.forEach((checkbox, index) => {
+              // 页面加载时恢复保存的选中状态
+              const savedState = localStorage.getItem(`todo-item-${index}`);
+              if (savedState === 'checked') {
+                  checkbox.checked = true;
+              }
+              
+              // 添加点击事件以保存状态
+              checkbox.addEventListener('change', function() {
+                  if (this.checked) {
+                      localStorage.setItem(`todo-item-${index}`, 'checked');
+                  } else {
+                      localStorage.setItem(`todo-item-${index}`, 'unchecked');
+                  }
+              });
+          });
+
+          showDay('overview');
       });
 
       // 显示音乐提示信息
@@ -1382,6 +1486,21 @@
           const tip = document.createElement('div');
           tip.className = 'music-tip';
           tip.innerHTML = '点击右下角按钮播放背景音乐';
+          document.body.appendChild(tip);
+
+          // 3秒后自动移除提示
+          setTimeout(() => {
+              if (tip.parentNode) {
+                  tip.parentNode.removeChild(tip);
+              }
+          }, 3000);
+      }
+
+      // 显示地图提示信息
+      function showMapTip() {
+          const tip = document.createElement('div');
+          tip.className = 'music-tip';
+          tip.innerHTML = '划到底部点击路线图可在高德地图中查看详细路线';
           document.body.appendChild(tip);
 
           // 3秒后自动移除提示
