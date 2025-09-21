@@ -197,6 +197,27 @@
         flex: 1;
         background-size: cover;
         background-position: center;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+
+      .attraction-image:hover {
+        transform: scale(1.05);
+      }
+
+      /* 视频样式 */
+      .attraction-video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border: none;
+        outline: none;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+
+      .attraction-video:hover {
+        transform: scale(1.05);
       }
 
       .attraction-info {
@@ -313,6 +334,66 @@
         0% { transform: scale(1); }
         50% { transform: scale(1.05); }
         100% { transform: scale(1); }
+      }
+
+      /* 图片查看器样式 */
+      .image-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0);
+        z-index: 3000;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease, background-color 0.3s ease;
+      }
+
+      .image-modal.active {
+        display: flex;
+        opacity: 1;
+        background-color: rgba(0, 0, 0, 0.9);
+      }
+
+      .modal-content {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+        border-radius: 8px;
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+        transform: scale(0.8);
+        transition: transform 0.3s ease;
+        opacity: 0;
+      }
+
+      #modalVideo {
+        display: none;
+      }
+
+      .image-modal.active .modal-content {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: white;
+        font-size: 30px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        outline: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .image-modal.active .close-modal {
+        opacity: 1;
       }
 
       /* 音乐提示信息样式 */
@@ -502,13 +583,13 @@
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://youke1.picui.cn/s1/2025/09/20/68ce9a6b04228.jpg');
+                  background-image: url('./img/国家一号风景大道/10.2国家一号风景大道（御道口-乌兰布统）_1_行行摄摄的老锺_来自小红书网页版.jpg');
                 "
               ></div>
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=2');
+                  background-image: url('./img/国家一号风景大道/9.29国家一号风景大道，附草原赏秋路线。_1_行行摄摄的老锺_来自小红书网页版.jpg');
                 "
               ></div>
             </div>
@@ -525,13 +606,13 @@
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=3');
+                  background-image: url('./img/锡林浩特大草原/1125篇——9月锡林浩特_1_让世界了解内蒙古_来自小红书网页版.jpg');
                 "
               ></div>
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=4');
+                  background-image: url('./img/锡林浩特大草原/一直开到云开见草原☁️_1_Momo_来自小红书网页版.jpg');
                 "
               ></div>
             </div>
@@ -568,13 +649,13 @@
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=5');
+                  background-image: url('./img/99号公路起点/内蒙古｜草原99号公路起点_1_不生气旅行_来自小红书网页版.jpg');
                 "
               ></div>
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=6');
+                  background-image: url('./img/99号公路起点/来99号公路一定要等到天黑！_1_宝生永梦_来自小红书网页版.jpg');
                 "
               ></div>
             </div>
@@ -591,13 +672,13 @@
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=7');
+                  background-image: url('./img/乌兰盖湖景区/_1_Amll 👄 包治百病_来自小红书网页版.jpg');
                 "
               ></div>
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=8');
+                  background-image: url('./img/乌兰盖湖景区/乌拉盖湖！仙境也不过如此🥹_1_ysxsshs_来自小红书网页版.jpg');
                 "
               ></div>
             </div>
@@ -629,40 +710,35 @@
           <h2>第三天：阿尔山国家森林公园深度游</h2>
 
           <div class="attraction-card">
-            <div class="attraction-images">
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('https://picsum.photos/600/300?random=9');
-                "
-              ></div>
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('https://picsum.photos/600/300?random=10');
-                "
-              ></div>
+                <div class="attraction-images">
+                    <div class="attraction-image" style="background-image: url('./img/乌苏浪子湖/乌苏浪子湖的晨雾_1_话饼_来自小红书网页版.jpg')"></div>
+                    <div class="attraction-image">
+                        <video class="attraction-video" muted loop autoplay playsinline>
+                            <source src="./img/乌苏浪子湖/乌苏浪子湖的晨雾_1_话饼_来自小红书网页版.mp4" type="video/mp4">
+                            您的浏览器不支持视频播放。
+                        </video>
+                    </div>
+                </div>
+                <div class="attraction-info">
+                    <h3 class="attraction-title">乌苏浪子湖晨雾</h3>
+                    <p class="attraction-description">
+                        乌苏浪子湖是阿尔山最大的湖泊，也是鸟类的栖息地。清晨时分，湖面薄雾缭绕，宛如仙境，是摄影爱好者的理想拍摄地点。晨雾中的乌苏浪子湖宁静而神秘，让人感受到大自然的宁静与和谐。
+                    </p >
+                </div>
             </div>
-            <div class="attraction-info">
-              <h3 class="attraction-title">乌苏浪子湖晨雾</h3>
-              <p class="attraction-description">
-                乌苏浪子湖是阿尔山最大的湖泊，也是鸟类的栖息地。清晨时分，湖面薄雾缭绕，宛如仙境，是摄影爱好者的理想拍摄地点。晨雾中的乌苏浪子湖宁静而神秘，让人感受到大自然的宁静与和谐。
-              </p >
-            </div>
-          </div>
 
           <div class="attraction-card">
             <div class="attraction-images">
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=11');
+                  background-image: url('./img/天池/被《国家地理》评为最美秋色的阿尔山太值了_1_西西的旅行_来自小红书网页版.jpg');
                 "
               ></div>
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=12');
+                  background-image: url('./img/天池/阿尔山驼峰岭天池_1_小红薯5F734DB5_来自小红书网页版.jpg');
                 "
               ></div>
             </div>
@@ -679,13 +755,13 @@
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=13');
+                  background-image: url('./img/不冻河/发现不冻河这个拍照位置的人真是个天才_1_迪士尼在逃豆瓣酱_来自小红书网页版.jpg');
                 "
               ></div>
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=14');
+                  background-image: url('./img/不冻河/阿尔山最高光就是不冻河！！附2日免费路线_1_百万同学_来自小红书网页版.jpg');
                 "
               ></div>
             </div>
@@ -702,13 +778,13 @@
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=15');
+                  background-image: url('./img/杜鹃湖/阿尔山—杜鹃湖_1_喜喜_来自小红书网页版.jpg');
                 "
               ></div>
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=16');
+                  background-image: url('./img/大峡谷/大峡谷才是阿尔山最好的地方_1_哲学家猫猫_来自小红书网页版.jpg');
                 "
               ></div>
             </div>
@@ -744,13 +820,13 @@
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=17');
+                  background-image: url('./img/成吉思汗拴马桩/在草原的尽头🍰是一块巨大的抹茶蛋糕_1_请叫我安大侠_来自小红书网页版.jpg');
                 "
               ></div>
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=18');
+                  background-image: url('./img/成吉思汗拴马桩/奔向草原的牛马_1_盈车嘉穗🌾_来自小红书网页版.jpg');
                 "
               ></div>
             </div>
@@ -767,13 +843,13 @@
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=19');
+                  background-image: url('./img/呼伦湖/呼伦湖·私人牧场📍_1_林-旅居_来自小红书网页版.jpg');
                 "
               ></div>
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=20');
+                  background-image: url('./img/呼伦湖/我在呼伦湖收获了绝美日落🌅_1_vinaaaaa_来自小红书网页版.jpg');
                 "
               ></div>
             </div>
@@ -790,13 +866,13 @@
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=21');
+                  background-image: url('./img/满洲里市/朋友圈问爆了❗都以为我去国外玩了❗_1_小Q浪迹天涯_来自小红书网页版.jpg');
                 "
               ></div>
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=22');
+                  background-image: url('./img/满洲里市/满洲里全攻略︳这个角度的国门（附时间表）_1_宋大猫_来自小红书网页版.jpg');
                 "
               ></div>
             </div>
@@ -832,13 +908,13 @@
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=23');
+                  background-image: url('./img/186彩带河/186彩带河.一场旷日持久的落日_1_爱旅行的蹬蹬麻麻_来自小红书网页版.jpg');
                 "
               ></div>
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=24');
+                  background-image: url('./img/186彩带河/186彩带河值得去吗？_1_汤圆是大宝_来自小红书网页版.jpg');
                 "
               ></div>
             </div>
@@ -852,18 +928,13 @@
 
           <div class="attraction-card">
             <div class="attraction-images">
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('https://picsum.photos/600/300?random=25');
-                "
-              ></div>
-              <div
-                class="attraction-image"
-                style="
-                  background-image: url('https://picsum.photos/600/300?random=26');
-                "
-              ></div>
+              <div class="attraction-image">
+                <video class="attraction-video" muted loop autoplay playsinline>
+                  <source src="./img/33湿地/最美边境公路G331_1_吴小白_来自小红书网页版.mp4" type="video/mp4">
+                  您的浏览器不支持视频播放。
+                </video>
+              </div>
+              <div class="attraction-image" style="background-image: url('./img/33湿地/被《国家地理》称之为，最美草原公路之一🛣️_1_时线旅行-高端度假_来自小红书网页版.jpg')"></div>
             </div>
             <div class="attraction-info">
               <h3 class="attraction-title">三十三湿地</h3>
@@ -878,13 +949,13 @@
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=27');
+                  background-image: url('./img/黑山头镇/呼伦贝尔必玩打卡景点｜“黑山头”_1_恒宇旅行_来自小红书网页版.jpg');
                 "
               ></div>
               <div
                 class="attraction-image"
                 style="
-                  background-image: url('https://picsum.photos/600/300?random=28');
+                  background-image: url('./img/黑山头镇/在黑山头 我也看到了银河🌌星空🌃_1_一川老母_来自小红书网页版.jpg');
                 "
               ></div>
             </div>
@@ -917,8 +988,8 @@
 
             <div class="attraction-card">
                 <div class="attraction-images">
-                    <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=29')"></div>
-                    <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=30')"></div>
+                    <div class="attraction-image" style="background-image: url('./img/卡线/大兴安岭根白线｜来到了小学课本中的秋天🍂_1_肆月君_来自小红书网页版.jpg')"></div>
+                    <div class="attraction-image" style="background-image: url('./img/卡线/达达线和热阿线有什么不一样_1_L_来自小红书网页版.jpg')"></div>
                 </div>
                 <div class="attraction-info">
                     <h3 class="attraction-title">904县道（卡线）</h3>
@@ -930,8 +1001,13 @@
 
             <div class="attraction-card">
                 <div class="attraction-images">
-                    <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=31')"></div>
-                    <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=32')"></div>
+                    <div class="attraction-image" style="background-image: url('./img/恩和村/内蒙古day3-恩和_1_吃饭超快_来自小红书网页版.jpg')"></div>
+                    <div class="attraction-image">
+                        <video class="attraction-video" muted loop autoplay playsinline>
+                            <source src="./img/恩和村/内蒙古day3-恩和_1_吃饭超快_来自小红书网页版.mp4" type="video/mp4">
+                            您的浏览器不支持视频播放。
+                        </video>
+                    </div>
                 </div>
                 <div class="attraction-info">
                     <h3 class="attraction-title">恩和村</h3>
@@ -943,8 +1019,13 @@
 
             <div class="attraction-card">
                 <div class="attraction-images">
-                    <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=33')"></div>
-                    <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=34')"></div>
+                    <div class="attraction-image" style="background-image: url('./img/海拉尔/豪赌成功！！在哈克崖山追到了人生日落❗️_1_青空的时光口袋_来自小红书网页版.jpg')"></div>
+                    <div class="attraction-image">
+                        <video class="attraction-video" muted loop autoplay playsinline>
+                            <source src="./img/海拉尔/豪赌成功！！在哈克崖山追到了人生日落❗️_1_青空的时光口袋_来自小红书网页版.mp4" type="video/mp4">
+                            您的浏览器不支持视频播放。
+                        </video>
+                    </div>
                 </div>
                 <div class="attraction-info">
                     <h3 class="attraction-title">海拉尔市区</h3>
@@ -967,8 +1048,8 @@
 
                 <div class="attraction-card">
                     <div class="attraction-images">
-                        <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=35')"></div>
-                        <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=36')"></div>
+                        <div class="attraction-image" style="background-image: url('./img/海拉尔/豪赌成功！！在哈克崖山追到了人生日落❗️_1_青空的时光口袋_来自小红书网页版.jpg')"></div>
+                        <div class="attraction-image" style="background-image: url('./img/兴安盟/城市牛马们！乌兰毛都草原才是你该呆的地方…_1_小肥颖儿_来自小红书网页版.jpg')"></div>
                     </div>
                     <div class="attraction-info">
                         <h3 class="attraction-title">海拉尔周边草原</h3>
@@ -980,8 +1061,8 @@
 
                 <div class="attraction-card">
                     <div class="attraction-images">
-                        <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=37')"></div>
-                        <div class="attraction-image" style="background-image: url('https://picsum.photos/600/300?random=38')"></div>
+                        <div class="attraction-image" style="background-image: url('./img/兴安盟/阿尔山·呼伦贝尔4日追秋攻略｜附踩雷机位_1_热爱生活的杨小N_来自小红书网页版.jpg')"></div>
+                        <div class="attraction-image" style="background-image: url('./img/蓝房子/已经在开始期待呼伦贝尔封神级别的秋天了🍂_1_Eli_来自小红书网页版.jpg')"></div>
                     </div>
                     <div class="attraction-info">
                         <h3 class="attraction-title">兴安盟</h3>
@@ -1026,6 +1107,13 @@
     <button id="musicControl" class="music-control" onclick="toggleMusic()">
       🔇
     </button>
+
+    <!-- 图片查看器模态框 -->
+    <div id="imageModal" class="image-modal">
+      <span class="close-modal">&times;</span>
+      <img class="modal-content" id="modalImage">
+      <video class="modal-content" id="modalVideo" muted controls></video>
+    </div>
 
     <!-- 音频元素 -->
     <audio
@@ -1130,9 +1218,100 @@
           }
       }
 
+      // 图片查看器功能
+      function initImageViewer() {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const modalVideo = document.getElementById('modalVideo');
+        const closeModal = document.querySelector('.close-modal');
+        const attractionImages = document.querySelectorAll('.attraction-image');
+
+        // 为每个景点图片添加点击事件
+        attractionImages.forEach(image => {
+          image.addEventListener('click', function() {
+            // 隐藏图片和视频元素
+            modalImg.style.display = 'none';
+            modalVideo.style.display = 'none';
+            
+            // 检查是否是视频元素
+            const video = this.querySelector('video');
+            if (video) {
+              // 如果是视频，显示视频元素
+              const source = video.querySelector('source');
+              if (source) {
+                modalVideo.src = source.src;
+                modalVideo.style.display = 'block';
+                setTimeout(() => {
+                  modalVideo.play().catch(e => console.log("视频播放失败:", e));
+                }, 300);
+              }
+            } else {
+              // 处理背景图片
+              const bgImage = this.style.backgroundImage;
+              const imageUrl = bgImage.match(/url\(["']?(.*?)["']?\)/)[1];
+              modalImg.src = imageUrl;
+              modalImg.style.display = 'block';
+            }
+            
+            // 显示模态框
+            setTimeout(() => {
+              modal.classList.add('active');
+            }, 10);
+            
+            // 禁止背景滚动
+            document.body.style.overflow = 'hidden';
+          });
+        });
+
+        // 关闭模态框
+        closeModal.addEventListener('click', function() {
+          closeModalModal();
+        });
+
+        // 点击模态框背景关闭
+        modal.addEventListener('click', function(event) {
+          if (event.target === modal) {
+            closeModalModal();
+          }
+        });
+
+        // 键盘ESC键关闭
+        document.addEventListener('keydown', function(event) {
+          if (event.key === 'Escape' && modal.classList.contains('active')) {
+            closeModalModal();
+          }
+        });
+
+        // 关闭模态框的函数
+        function closeModalModal() {
+          modal.classList.remove('active');
+          
+          // 暂停视频播放
+          if (modalVideo.style.display !== 'none') {
+            modalVideo.pause();
+          }
+          
+          setTimeout(() => {
+            document.body.style.overflow = 'auto';
+          }, 300);
+        }
+      }
+
       // 页面加载完成后创建枫叶并显示音乐提示
       document.addEventListener('DOMContentLoaded', function() {
           createMapleLeaves();
+
+          // 初始化图片查看器
+          initImageViewer();
+
+          // 自动播放所有视频
+          const videos = document.querySelectorAll('.attraction-video');
+          videos.forEach(video => {
+            // 等待一段时间后播放视频，避免浏览器限制
+            setTimeout(() => {
+              video.play().catch(e => console.log("视频自动播放失败:", e));
+            }, 1000);
+          });
 
           // 添加蒙层点击事件
           const overlay = document.getElementById('overlay');
